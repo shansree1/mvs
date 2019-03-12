@@ -18,6 +18,10 @@ public class Region implements Serializable {
     @OneToMany(mappedBy = "region")
     private Set<Branch> branches;
 
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private RegionPeopleData regionPeopleData;
+
     public Long getRegionId() {
         return regionId;
     }
@@ -48,5 +52,13 @@ public class Region implements Serializable {
 
     public void setBranches(Set<Branch> branches) {
         this.branches = branches;
+    }
+
+    public RegionPeopleData getRegionPeopleData() {
+        return regionPeopleData;
+    }
+
+    public void setRegionPeopleData(RegionPeopleData regionPeopleData) {
+        this.regionPeopleData = regionPeopleData;
     }
 }

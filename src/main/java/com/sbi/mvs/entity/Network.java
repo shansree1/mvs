@@ -18,6 +18,10 @@ public class Network implements Serializable {
     @OneToMany(mappedBy = "network")
     private Set<Module> modules;
 
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private LHOPeopleData lhoPeopleData;
+
     public Long getNetworkId() {
         return networkId;
     }
@@ -48,5 +52,13 @@ public class Network implements Serializable {
 
     public void setModules(Set<Module> modules) {
         this.modules = modules;
+    }
+
+    public LHOPeopleData getLhoPeopleData() {
+        return lhoPeopleData;
+    }
+
+    public void setLhoPeopleData(LHOPeopleData lhoPeopleData) {
+        this.lhoPeopleData = lhoPeopleData;
     }
 }
