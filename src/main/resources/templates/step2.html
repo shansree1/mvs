@@ -7,6 +7,7 @@
     <title>SBI ATM Alerts</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+    <div th:include="header :: stylesall"> </div>
     <script>
 
         function goback()
@@ -19,10 +20,18 @@
         }
 
         function retrieveStates() {
-            var url = '/states';
+            var url = '/atmList';
 
-            $("#stateSel").load(url);
+            $("#atmSelect").load(url);
         }
+
+        $(document).ready(function(){
+            $("#atmSelection").change(function ()
+            {
+                alert($(this).val());
+                console.log($("#siteSelection").val());
+            });
+        });
     </script>
 
 </head>
@@ -61,17 +70,18 @@
 
         <div class="row sbirow">
             <div class="col-md-2"></div>
-            <div id="stateSel" class="col-md-2">
-                <select>
+            <div id="atmSelect" class="col-md-2">
+                <select id="atmSelection" th:object="${atmIn}">
                     <option>Select One</option>
                 </select>
             </div>
             <div>
                 <input class="form-control" type="text" name="atmType" placeholder="ATM Type" >
             </div>
-            <div id="row2Sel2" class="col-md-2">
-                <select>
-                    <option>Select One</option>
+            <div id="siteSel" class="col-md-2">
+                <select name="site" id="siteSelection" >
+                    <option> -- Select One --</option>
+                    <option th:each="site : ${siteList}" th:value="site" th:text="${site}" th:selected="${atmIn != null && site==atmIn.siteType}"></option>
                 </select>
             </div>
             <div id="row2Sel3" class="col-md-2">
@@ -191,7 +201,6 @@
     </form>
     </div>
 
-    <div th:include="header :: stylesall"> </div>
 </body>
 
 </html>

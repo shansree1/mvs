@@ -5,11 +5,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <div th:fragment="statelistFrag" >
-        <select name="state">
-            <option>Select One</option>
-            <option th:each="statein : ${stateList}" th:value="statein" th:text="${statein.regionName}" ></option>
+    <div th:fragment="atmlistFrag" >
+        <select name="atm">
+            <option> -- Select One --</option>
+            <option th:each="atm : ${atmList}" th:value="atm" th:text="${atm.atmId}" ></option>
         </select>
+    </div>
+
+    <div th:fragment="sitelistFrag" >
+
     </div>
 </body>
 </html>

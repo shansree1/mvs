@@ -36,36 +36,23 @@ public class GreetingController
     {
         model.addAttribute("currTab", "STEP2");
 
-        List<Branch> areaList = new ArrayList<>();
-        Branch area1 = new Branch();
-        area1.setBranchId(40001L);
-        area1.setBranchName("East Mumbai");
-        areaList.add(area1);
-
-        Branch area2 = new Branch();
-        area2.setBranchId(45003L);
-        area2.setBranchName("South Goa");
-        areaList.add(area2);
 
         List<ATM> atmList = atmRepository.findAll();
         Set<Branch> cashLinkBranch = atmList.stream().map(ATM::getCashLinkBranch).collect(Collectors.toSet());
 
         model.addAttribute("cashbranchList", cashLinkBranch);
 
-        List<Branch> branchList = new ArrayList<>();
-        Branch branch1 = new Branch();
-        branch1.setBranchId(66666L);
-        branch1.setBranchName("Owner Branch 1");
-        branchList.add(branch1);
-
-        Branch branch2 = new Branch();
-        branch2.setBranchId(55555L);
-        branch2.setBranchName("Owner Branch 2");
-        branchList.add(branch2);
-
         Set<Branch> ownerBranch = atmList.stream().map(ATM::getOwnerBranch).collect(Collectors.toSet());
 
         model.addAttribute("ownerbranchList", ownerBranch);
+
+        List<String> siteList = new ArrayList<>();
+        siteList.add("Onsite");
+        siteList.add("Offsite");
+        model.addAttribute("siteList", siteList);
+
+        ATM atmOut = new ATM();
+        model.addAttribute("atmOut", atmOut);
 
         return "step2";
     }
@@ -90,20 +77,21 @@ public class GreetingController
     }
 
 
-    @GetMapping("/states")
+    @GetMapping("/atmList")
     public String states(Model model)
     {
 
-        List<Region> stateList = new ArrayList<>();
-        Region branch1 = new Region();
-        branch1.setRegionName("S1BB10032");
+        List<ATM> stateList = new ArrayList<>();
+        ATM branch1 = new ATM();
+        branch1.setAtmId("100002322320L");
+        branch1.setSiteType("Offsite");
         stateList.add(branch1);
 
-        Region branch2 = new Region();
-        branch2.setRegionName("S1BJ10037");
+        ATM branch2 = new ATM();
+        branch2.setAtmId("300002322320L");
         stateList.add(branch2);
 
-        model.addAttribute("stateList", stateList);
-        return "fragments :: statelistFrag";
+        model.addAttribute("atmList", stateList);
+        return "fragments :: atmlistFrag";
     }
 }
