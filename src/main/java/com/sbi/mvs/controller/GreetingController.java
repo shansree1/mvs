@@ -1,5 +1,6 @@
 package com.sbi.mvs.controller;
 
+import com.sbi.mvs.entity.ATM;
 import com.sbi.mvs.entity.Branch;
 import com.sbi.mvs.entity.Region;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,12 @@ public class GreetingController
         area2.setBranchName("South Goa");
         areaList.add(area2);
 
+
+        Branch area3 = new Branch();
+        area3.setBranchId(47003L);
+        area3.setBranchName("North Delhi");
+        areaList.add(area3);
+
         model.addAttribute("cashbranchList", areaList);
 
         List<Branch> branchList = new ArrayList<>();
@@ -52,6 +59,14 @@ public class GreetingController
         branchList.add(branch2);
 
         model.addAttribute("ownerbranchList", branchList);
+
+        List<String> siteList = new ArrayList<>();
+        siteList.add("Onsite");
+        siteList.add("Offsite");
+        model.addAttribute("siteList", siteList);
+
+        ATM atmOut = new ATM();
+        model.addAttribute("atmOut", atmOut);
 
         return "step2";
     }
@@ -76,20 +91,21 @@ public class GreetingController
     }
 
 
-    @GetMapping("/states")
+    @GetMapping("/atmList")
     public String states(Model model)
     {
 
-        List<Region> stateList = new ArrayList<>();
-        Region branch1 = new Region();
-        branch1.setRegionName("S1BB10032");
+        List<ATM> stateList = new ArrayList<>();
+        ATM branch1 = new ATM();
+        branch1.setAtmId(100002322320L);
+        branch1.setSiteType("Offsite");
         stateList.add(branch1);
 
-        Region branch2 = new Region();
-        branch2.setRegionName("S1BJ10037");
+        ATM branch2 = new ATM();
+        branch2.setAtmId(300002322320L);
         stateList.add(branch2);
 
-        model.addAttribute("stateList", stateList);
-        return "fragments :: statelistFrag";
+        model.addAttribute("atmList", stateList);
+        return "fragments :: atmlistFrag";
     }
 }
