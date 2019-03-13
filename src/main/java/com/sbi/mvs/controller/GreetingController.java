@@ -1,7 +1,10 @@
 package com.sbi.mvs.controller;
 
+import com.sbi.mvs.entity.ATM;
 import com.sbi.mvs.entity.Branch;
 import com.sbi.mvs.entity.Region;
+import com.sbi.mvs.repository.AtmRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +14,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class GreetingController
 {
+
+    @Autowired
+    AtmRepository atmRepository;
+
     @GetMapping("/")
     public String index(Model model)
     {
@@ -38,7 +47,10 @@ public class GreetingController
         area2.setBranchName("South Goa");
         areaList.add(area2);
 
-        model.addAttribute("cashbranchList", areaList);
+        List<ATM> atmList = atmRepository.findAll();
+        Set<Branch> cashLinkBranch = atmList.stream().map(ATM::getCashLinkBranch).collect(Collectors.toSet());
+
+        model.addAttribute("cashbranchList", cashLinkBranch);
 
         List<Branch> branchList = new ArrayList<>();
         Branch branch1 = new Branch();
@@ -51,7 +63,9 @@ public class GreetingController
         branch2.setBranchName("Owner Branch 2");
         branchList.add(branch2);
 
-        model.addAttribute("ownerbranchList", branchList);
+        Set<Branch> ownerBranch = atmList.stream().map(ATM::getOwnerBranch).collect(Collectors.toSet());
+
+        model.addAttribute("ownerbranchList", ownerBranch);
 
         return "step2";
     }

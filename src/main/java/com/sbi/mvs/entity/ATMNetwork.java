@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class ATMNetwork implements Serializable {
 
     @Id
-    private Long atmId;
+    private String atmId;
     private String ipAddress;
     private String subnet;
     private String defaultGateway;
@@ -21,11 +21,11 @@ public class ATMNetwork implements Serializable {
     @JoinColumn(name = "atmId")
     private ATM atm;
 
-    public Long getAtmId() {
+    public String getAtmId() {
         return atmId;
     }
 
-    public void setAtmId(Long atmId) {
+    public void setAtmId(String atmId) {
         this.atmId = atmId;
     }
 
