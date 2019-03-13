@@ -1,9 +1,6 @@
 package com.sbi.mvs.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -20,8 +17,15 @@ public class ATM implements Serializable {
     private String phase;
     private String msVendor;
     private String cashRepl;
-    private Long ownerBranch;
-    private long cashLinkBranch;
+
+    @ManyToOne
+    @JoinColumn(name = "ownerBranch")
+    private Branch ownerBranch;
+
+    @ManyToOne
+    @JoinColumn(name = "cashLinkBranch")
+    private Branch cashLinkBranch;
+
     private String address1;
     private String address2;
     private String address3;
@@ -121,19 +125,19 @@ public class ATM implements Serializable {
         this.cashRepl = cashRepl;
     }
 
-    public Long getOwnerBranch() {
+    public Branch getOwnerBranch() {
         return ownerBranch;
     }
 
-    public void setOwnerBranch(Long ownerBranch) {
+    public void setOwnerBranch(Branch ownerBranch) {
         this.ownerBranch = ownerBranch;
     }
 
-    public long getCashLinkBranch() {
+    public Branch getCashLinkBranch() {
         return cashLinkBranch;
     }
 
-    public void setCashLinkBranch(long cashLinkBranch) {
+    public void setCashLinkBranch(Branch cashLinkBranch) {
         this.cashLinkBranch = cashLinkBranch;
     }
 
