@@ -1,0 +1,35 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script type="text/javascript" src="webjars/jquery/3.3.1-2/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+</head>
+
+<body>
+
+    <!-- Tab links -->
+    <div th:fragment="copy">
+        <ul class="nav nav-tabs nav-pills nav-justified" >
+            <li class="nav-item" ><a class="nav-link" th:classappend="${currTab} == STEP1 ? active : ''" href="#">STEP1</a></li>
+            <li class="nav-item" ><a class="nav-link" th:classappend="${currTab} == STEP2 ? active : ''" href="#">STEP2</a></li>
+            <li class="nav-item" ><a class="nav-link" th:classappend="${currTab} == STEP3 ? active : ''" href="#">STEP3</a></li>
+            <li class="nav-item" ><a class="nav-link" th:classappend="${currTab} == STEP4 ? active : ''" href="#">STEP4</a></li>
+            <li class="nav-item" ><a class="nav-link" th:classappend="${currTab} == STEP5 ? active : ''" href="#">STEP5</a></li>
+        </ul>
+    </div>
+
+    <div th:fragment="stylesall">
+        <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}" />
+        <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+        <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    </div>
+
+</body>
+
+</html>
+

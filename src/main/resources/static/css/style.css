@@ -1,0 +1,14 @@
+
+div.sbirow {
+    margin-top:1em;
+}
+
+.sbifieldset {
+    border-style: groove;
+    border-width: 1px;
+}
+
+textarea.sbistyle {
+    width: 100%;
+    border: 1px solid grey;
+}

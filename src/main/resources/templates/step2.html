@@ -1,0 +1,198 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>SBI ATM Alerts</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <script>
+
+        function goback()
+        {
+            window.href.location='localhost:8080'
+        }
+        function submit()
+        {
+            document.getElementById('form1').submit();
+        }
+
+        function retrieveStates() {
+            var url = '/states';
+
+            $("#stateSel").load(url);
+        }
+    </script>
+
+</head>
+
+<body>
+
+
+    <div class="container">
+
+        <div th:include="header :: copy"> </div>
+
+        <form action="/step3" id="form1" method="post">
+        <div class="row sbirow">
+            <div class="col-md-3 form-group">
+            <label>Select One:</label>
+            </div>
+            <div class="col-md-1">
+            <input type="radio" name="typeSel" value="area" />
+            </div>
+            <div class="col-md-3">
+        <select name="area">
+            <option>Select One</option>
+            <option th:each="branchin : ${cashbranchList}" th:value="branchin" th:text="${branchin.branchId} + '-' + ${branchin.branchName}" ></option>
+        </select>
+            </div>
+            <div class="col-md-1">
+        <input type="radio" name="typeSel" value="branch" />
+            </div>
+            <div class="col-md-3">
+        <select name="branch" onchange="retrieveStates()">
+            <option>Select One</option>
+            <option th:each="branchin : ${ownerbranchList}" th:value="branchin" th:text="${branchin.branchId} + '-' + ${branchin.branchName}" ></option>
+        </select>
+            </div>
+        </div>
+
+        <div class="row sbirow">
+            <div class="col-md-2"></div>
+            <div id="stateSel" class="col-md-2">
+                <select>
+                    <option>Select One</option>
+                </select>
+            </div>
+            <div>
+                <input class="form-control" type="text" name="atmType" placeholder="ATM Type" >
+            </div>
+            <div id="row2Sel2" class="col-md-2">
+                <select>
+                    <option>Select One</option>
+                </select>
+            </div>
+            <div id="row2Sel3" class="col-md-2">
+                <select>
+                    <option>Select One</option>
+                </select>
+            </div>
+            <div id="row2Sel4" class="col-md-2">
+                <select>
+                    <option>Select One</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row sbirow">
+            <div id="row3Sel1" class="col-md-2">
+                <select>
+                    <option>Select One</option>
+                </select>
+            </div>
+            <div id="row3Sel2" class="col-md-2">
+                <select>
+                    <option>Select One</option>
+                </select>
+            </div>
+            <div id="row3Sel3" class="col-md-2">
+                <select>
+                    <option>Select One</option>
+                </select>
+            </div>
+            <div id="row3Sel4" class="col-md-2">
+                <select>
+                    <option>Select One</option>
+                </select>
+            </div>
+            <div id="row3Sel5" class="col-md-2">
+                <select>
+                    <option>Select One</option>
+                </select>
+            </div>
+        </div>
+            <div class="row sbirow">
+
+                <fieldset class="sbifieldset col-md-12" >
+                <legend>ATM Info:</legend>
+                    <div class="row sbirow">
+                        <label class="col-md-2">PIN CODE:</label>
+                        <input class="col-md-2 form-control" type="text" name="pincode" placeholder="Enter Pincode">
+                    </div>
+                    <div class="row sbirow">
+                        <div class="col-md-10">
+                            <textarea class="sbistyle" name="pin"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row sbirow">
+                    <div class="col-md-3">
+                        <label>Landmark:</label>
+                        <input class="form-control" type="text" name="landmark" >
+                    </div>
+
+                    <div class="col-md-3">
+                        <fieldset class="sbifieldset col-md-12" >
+                            <legend>BASE24 Switch</legend>
+                            <div class="form-group">
+
+                                <label class="col-md-6">DNS:</label>
+                                <input class="form-control" type="text" name="dns" >
+
+                                <label class="col-md-6">Port:</label>
+                                <input class="form-control" type="text" name="port" >
+
+                                <label class="col-md-6">PrefDNS:</label>
+                                <input class="form-control" type="text" name="prefdns" >
+
+                                <label class="col-md-6">AltDNS:</label>
+                                <input class="form-control" type="text" name="altdns" >
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-3 ">
+                        <fieldset class="sbifieldset col-md-12" >
+                            <legend>ATM IP</legend>
+                            <div class="form-group">
+                                <label class="col-md-6">IP Address:</label>
+                                <input class="form-control" type="text" name="dns" >
+
+                                <label class="col-md-6">Subnet:</label>
+                                <input class="form-control" type="text" name="port" >
+
+                                <label class="col-md-6">Gateway IP:</label>
+                                <input class="form-control" type="text" name="prefdns" >
+                            </div>
+                        </fieldset>
+
+                        <label class="col-md-6">TMK Checksum:</label>
+                        <input class="form-control" type="text" name="tmkchecksum" >
+
+                        <div id="row4Sel1">
+                            <label class="col-md-6">TMK Available with Branch:</label>
+                            <select>
+                                <option>Y</option>
+                                <option>N</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    </div>
+                </fieldset>
+            </div>
+        <div>
+            <a href="#" class="previous" onclick="javascript:goback()">Previous &raquo;</a>
+            <a href="#" class="next" onclick="javascript:submit()">Next &raquo;</a>
+        </div>
+
+    </form>
+    </div>
+
+    <div th:include="header :: stylesall"> </div>
+</body>
+
+</html>
+
