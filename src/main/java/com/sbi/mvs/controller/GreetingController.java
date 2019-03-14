@@ -98,7 +98,7 @@ public class GreetingController
     {
         System.out.println(atmId);
         ATM atm = new ATM();
-        atm.setAtmId(100002322320L);
+        atm.setAtmId("100002322320L");
         atm.setSiteType("Offsite");
         atm.setOwnershipType("Opex-TOM");
         atm.setNetworkType("SBI-CONNECT");
