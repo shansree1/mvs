@@ -5,12 +5,10 @@ import com.sbi.mvs.entity.Branch;
 import com.sbi.mvs.entity.Region;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -107,5 +105,29 @@ public class GreetingController
 
         model.addAttribute("atmList", stateList);
         return "fragments :: atmlistFrag";
+    }
+
+    @GetMapping("/loadForAtm/{atmId}")
+    public String states(Model model, @PathVariable("atmId") String atmId)
+    {
+        System.out.println(atmId);
+        ATM atm = new ATM();
+        atm.setAtmId(100002322320L);
+        atm.setSiteType("Offsite");
+        atm.setOwnershipType("Opex-TOM");
+        atm.setNetworkType("SBI-CONNECT");
+        atm.setOem("Hyosung");
+        atm.setModel("NCR22E");
+        atm.setMsVendor("Hitachi");
+        model.addAttribute("atm", atm);
+
+        model.addAttribute("siteList", Arrays.asList("Onsite", "Offsite"));
+        model.addAttribute("ownershipTypeList", Arrays.asList("Capex", "Opex-TOM", "Opex-MOF"));
+        model.addAttribute("nwTypeList", Arrays.asList("SBI-CONNECT", "VSAT-HCL", "VSAT-HUGHES", "VSAT-AIRTEL"));
+        model.addAttribute("oemList", Arrays.asList("Diebold", "Hitachi", "NCR", "Hyosung"));
+        model.addAttribute("modelList", Arrays.asList("NCR22E", "NCR22"));
+        model.addAttribute("msVendorList", Arrays.asList("FSS", "Hitachi", "NCR", "CMS"));
+
+        return "fragments :: atmFullFrag(atmIn=${atm})";
     }
 }

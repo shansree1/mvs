@@ -26,10 +26,12 @@
         }
 
         $(document).ready(function(){
-            $("#atmSelection").change(function ()
+            $(document).on('change', "#atmSelection", function ()
             {
-                alert($(this).val());
-                console.log($("#siteSelection").val());
+                var atm = $(this).val();
+                console.log(atm);
+                var url = '/loadForAtm/' + atm;
+                $("#siteSel").load(url);
             });
         });
     </script>
@@ -52,47 +54,44 @@
             <input type="radio" name="typeSel" value="area" />
             </div>
             <div class="col-md-3">
-        <select name="area">
-            <option>Select One</option>
-            <option th:each="branchin : ${cashbranchList}" th:value="branchin" th:text="${branchin.branchId} + '-' + ${branchin.branchName}" ></option>
-        </select>
+                <select name="area">
+                    <option>Select One</option>
+                    <option th:each="branchin : ${cashbranchList}" th:value="branchin" th:text="${branchin.branchId} + '-' + ${branchin.branchName}" ></option>
+                </select>
             </div>
             <div class="col-md-1">
-        <input type="radio" name="typeSel" value="branch" />
+                <input type="radio" name="typeSel" value="branch" />
             </div>
             <div class="col-md-3">
-        <select name="branch" onchange="retrieveStates()">
-            <option>Select One</option>
-            <option th:each="branchin : ${ownerbranchList}" th:value="branchin" th:text="${branchin.branchId} + '-' + ${branchin.branchName}" ></option>
-        </select>
+                <select name="branch" onchange="retrieveStates()">
+                    <option>Select One</option>
+                    <option th:each="branchin : ${ownerbranchList}" th:value="branchin" th:text="${branchin.branchId} + '-' + ${branchin.branchName}" ></option>
+                </select>
             </div>
         </div>
 
-        <div class="row sbirow">
-            <div class="col-md-2"></div>
+        <div class="row sbirow" th:with="varin=${atmIn}">
             <div id="atmSelect" class="col-md-2">
-                <select id="atmSelection" th:object="${atmIn}">
+                <select id="atmSelection">
                     <option>Select One</option>
                 </select>
             </div>
-            <div>
+            <div class="col-md-2">
                 <input class="form-control" type="text" name="atmType" placeholder="ATM Type" >
             </div>
-            <div id="siteSel" class="col-md-2">
-                <select name="site" id="siteSelection" >
-                    <option> -- Select One --</option>
-                    <option th:each="site : ${siteList}" th:value="site" th:text="${site}" th:selected="${atmIn != null && site==atmIn.siteType}"></option>
-                </select>
-            </div>
-            <div id="row2Sel3" class="col-md-2">
-                <select>
-                    <option>Select One</option>
-                </select>
-            </div>
-            <div id="row2Sel4" class="col-md-2">
-                <select>
-                    <option>Select One</option>
-                </select>
+            <div id="siteSel" class="col-md-7">
+
+            <!--<div id="row2Sel3" class="col-md-2">-->
+                <!--<select>-->
+                    <!--<option>Select One</option>-->
+                <!--</select>-->
+            <!--</div>-->
+            <!--<div id="row2Sel4" class="col-md-2">-->
+                <!--<select>-->
+                    <!--<option>Select One</option>-->
+                <!--</select>-->
+            <!--</div>-->
+
             </div>
         </div>
 

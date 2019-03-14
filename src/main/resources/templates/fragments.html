@@ -6,14 +6,64 @@
 </head>
 <body>
     <div th:fragment="atmlistFrag" >
-        <select name="atm">
+        <select th:name="atmin" id="atmSelection">
             <option> -- Select One --</option>
-            <option th:each="atm : ${atmList}" th:value="atm" th:text="${atm.atmId}" ></option>
+            <option th:each="atm : ${atmList}" th:value="${atm.atmId}" th:text="${atm.atmId}" ></option>
         </select>
     </div>
 
-    <div th:fragment="sitelistFrag" >
+    <div th:fragment="atmFullFrag(atmIn)" >
+        <div class="row col-md-12">
+            <div id="row2Sel3" class="col-md-6">
+                <label>Site Type</label>
+                <select name="site" id="siteSelection" th:value="${siteType}">
+                    <option> -- Select One --</option>
+                    <option th:each="site : ${siteList}" th:value="${site}" th:text="${site}" th:selected="${site==atmIn.siteType}"></option>
+                </select>
+            </div>
+            <div id="row2Sel4" class="col-md-6">
+                <label>Ownership Type</label>
+                <select name="ownershipType" id="ownershipSelection" th:value="${siteType}">
+                    <option> -- Select One --</option>
+                    <option th:each="ownership : ${ownershipTypeList}" th:value="${ownership}" th:text="${ownership}" th:selected="${ownership==atmIn.ownershipType}"></option>
+                </select>
+            </div>
+        </div>
 
+        <div class="row col-md-12">
+            <div class="col-md-6">
+                <label>N/W Type</label>
+                <select name="nwType">
+                    <option> -- Select One --</option>
+                    <option th:each="nwType : ${nwTypeList}" th:value="${nwType}" th:text="${nwType}" th:selected="${nwType==atmIn.networkType}"></option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label>Oem</label>
+                <select name="oem">
+                    <option> -- Select One --</option>
+                    <option th:each="oem : ${oemList}" th:value="${oem}" th:text="${oem}" th:selected="${oem==atmIn.oem}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row col-md-12">
+            <div class="col-md-6">
+                <label>Model</label>
+                <select name="model" >
+                    <option> -- Select One --</option>
+                    <option th:each="model : ${modelList}" th:value="${model}" th:text="${model}" th:selected="${model==atmIn.model}"></option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label>Phase</label>
+                <select name="msVendor" >
+                    <option> -- Select One --</option>
+                    <option th:each="msVendor : ${msVendorList}" th:value="${msVendor}" th:text="${msVendor}" th:selected="${msVendor==atmIn.msVendor}"></option>
+                </select>
+            </div>
+        </div>
     </div>
+
 </body>
 </html>
