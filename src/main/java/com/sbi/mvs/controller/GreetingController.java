@@ -5,15 +5,13 @@ import com.sbi.mvs.entity.ATMAuxInfo;
 import com.sbi.mvs.entity.Branch;
 import com.sbi.mvs.entity.Region;
 import com.sbi.mvs.repository.AtmRepository;
+import com.sbi.mvs.repository.BranchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -22,6 +20,9 @@ public class GreetingController
 
     @Autowired
     AtmRepository atmRepository;
+
+    @Autowired
+    BranchRepository branchRepository;
 
     @GetMapping("/")
     public String index(Model model)
@@ -39,14 +40,14 @@ public class GreetingController
         List<ATM> atmList = atmRepository.findAll();
         Set<Branch> cashLinkBranch = atmList.stream().map(ATM::getCashLinkBranch).collect(Collectors.toSet());
 
-        Branch branch1 = new Branch();
+        /*Branch branch1 = new Branch();
         branch1.setBranchId(100L);
         branch1.setBranchName("Branch 1");
         cashLinkBranch.add(branch1);
         Branch branch2 = new Branch();
         branch2.setBranchId(200L);
         branch2.setBranchName("Branch 2");
-        cashLinkBranch.add(branch2);
+        cashLinkBranch.add(branch2);*/
 
         model.addAttribute("cashbranchList", cashLinkBranch);
 
@@ -92,22 +93,22 @@ public class GreetingController
     }
 
 
-    @GetMapping("/atmList/{radioSel}/{brSel}")
-    public String states(Model model, @PathVariable("radioSel") String radioSel, @PathVariable("brSel") String brSel)
+    @GetMapping("/atmList/{branchType}/{branchId}")
+    public String states(Model model, @PathVariable("branchType") String branchType, @PathVariable("branchId") Long branchId)
     {
-        System.out.println(radioSel);
-        System.out.println(brSel);
-        List<ATM> stateList = new ArrayList<>();
-        ATM branch1 = new ATM();
-        branch1.setAtmId("100002322320L");
-        branch1.setSiteType("Offsite");
-        stateList.add(branch1);
+        System.out.println(branchType);
+        System.out.println(branchId);
+        List<ATM> atmList = new ArrayList<>();
+        Optional<Branch> branch = branchRepository.findById(branchId);
+        if(branch.isPresent()) {
+            if ("owner".equals(branchType)) {
+                atmList = atmRepository.findByOwnerBranch(branch.get());
+            } else {
+                atmList = atmRepository.findByCashLinkBranch(branch.get());
+            }
+        }
 
-        ATM branch2 = new ATM();
-        branch2.setAtmId("300002322320L");
-        stateList.add(branch2);
-
-        model.addAttribute("atmList", stateList);
+        model.addAttribute("atmList", atmList);
         return "fragments :: atmlistFrag";
     }
 
@@ -115,16 +116,18 @@ public class GreetingController
     public String states(Model model, @PathVariable("atmId") String atmId)
     {
         System.out.println(atmId);
-        ATM atm = new ATM();
+        Optional<ATM> atm = atmRepository.findById(atmId);
+        /*ATM atm = new ATM();
         atm.setAtmId("100002322320L");
         atm.setSiteType("Offsite");
         atm.setOwnershipType("Opex-TOM");
         atm.setNetworkType("SBI-CONNECT");
         atm.setOem("Hyosung");
         atm.setModel("NCR22E");
-        atm.setMsVendor("Hitachi");
-        model.addAttribute("atm", atm);
+        atm.setMsVendor("Hitachi");*/
+        model.addAttribute("atm", atm.get());
 
+        //model.addAttribute("atmType", atm.get().getAtmType());
         model.addAttribute("siteList", Arrays.asList("Onsite", "Offsite"));
         model.addAttribute("ownershipTypeList", Arrays.asList("Capex", "Opex-TOM", "Opex-MOF"));
         model.addAttribute("nwTypeList", Arrays.asList("SBI-CONNECT", "VSAT-HCL", "VSAT-HUGHES", "VSAT-AIRTEL"));
