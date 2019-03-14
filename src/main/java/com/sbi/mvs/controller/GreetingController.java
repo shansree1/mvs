@@ -1,6 +1,7 @@
 package com.sbi.mvs.controller;
 
 import com.sbi.mvs.entity.ATM;
+import com.sbi.mvs.entity.ATMAuxInfo;
 import com.sbi.mvs.entity.Branch;
 import com.sbi.mvs.entity.Region;
 import com.sbi.mvs.repository.AtmRepository;
@@ -57,14 +58,21 @@ public class GreetingController
 
 
     @PostMapping("/step3")
-    public String step3(@ModelAttribute("typeSel") String typeSel,
-                        @ModelAttribute("area") String area,
-                        Model model)
+    public String step3(Model model)
     {
-        System.out.println(typeSel);
-        System.out.println(area);
         model.addAttribute("currTab", "STEP3");
+
+        model.addAttribute("atmAux", new ATMAuxInfo());
         return "step3";
+    }
+
+    @PostMapping("/step4")
+    public String step4(Model model)
+    {
+        model.addAttribute("currTab", "STEP3");
+
+        model.addAttribute("atmAux", new ATMAuxInfo());
+        return "step4";
     }
 
     @GetMapping("/greeting")

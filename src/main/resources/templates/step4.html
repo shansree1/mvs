@@ -1,0 +1,37 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>SBI ATM Alerts</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}" />
+    <script>
+        function submit()
+        {
+            document.getElementById('form1').submit();
+        }
+    </script>
+</head>
+
+<body>
+
+    <div th:include="header :: copy"> </div>
+
+    <form action="/step2" id="form1">
+        <fieldset>
+            <legend>Group:</legend>
+            <p>Instructions are as follows:</p>
+        </fieldset>
+
+        <div>
+            <a href="#" class="next" onclick="javascript:submit()">Next &raquo;</a>
+        </div>
+    </form>
+
+    <div th:include="header :: stylesall"> </div>
+</body>
+
+</html>
+
