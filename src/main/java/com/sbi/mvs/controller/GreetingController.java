@@ -3,6 +3,8 @@ package com.sbi.mvs.controller;
 import com.sbi.mvs.entity.ATM;
 import com.sbi.mvs.entity.Branch;
 import com.sbi.mvs.entity.Region;
+import com.sbi.mvs.repository.AtmRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,10 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class GreetingController
 {
+
+    @Autowired
+    AtmRepository atmRepository;
+
     @GetMapping("/")
     public String index(Model model)
     {
@@ -26,37 +34,15 @@ public class GreetingController
     {
         model.addAttribute("currTab", "STEP2");
 
-        List<Branch> areaList = new ArrayList<>();
-        Branch area1 = new Branch();
-        area1.setBranchId(40001L);
-        area1.setBranchName("East Mumbai");
-        areaList.add(area1);
 
-        Branch area2 = new Branch();
-        area2.setBranchId(45003L);
-        area2.setBranchName("South Goa");
-        areaList.add(area2);
+        List<ATM> atmList = atmRepository.findAll();
+        Set<Branch> cashLinkBranch = atmList.stream().map(ATM::getCashLinkBranch).collect(Collectors.toSet());
 
+        model.addAttribute("cashbranchList", cashLinkBranch);
 
-        Branch area3 = new Branch();
-        area3.setBranchId(47003L);
-        area3.setBranchName("North Delhi");
-        areaList.add(area3);
+        Set<Branch> ownerBranch = atmList.stream().map(ATM::getOwnerBranch).collect(Collectors.toSet());
 
-        model.addAttribute("cashbranchList", areaList);
-
-        List<Branch> branchList = new ArrayList<>();
-        Branch branch1 = new Branch();
-        branch1.setBranchId(66666L);
-        branch1.setBranchName("Owner Branch 1");
-        branchList.add(branch1);
-
-        Branch branch2 = new Branch();
-        branch2.setBranchId(55555L);
-        branch2.setBranchName("Owner Branch 2");
-        branchList.add(branch2);
-
-        model.addAttribute("ownerbranchList", branchList);
+        model.addAttribute("ownerbranchList", ownerBranch);
 
         List<String> siteList = new ArrayList<>();
         siteList.add("Onsite");
@@ -95,12 +81,12 @@ public class GreetingController
 
         List<ATM> stateList = new ArrayList<>();
         ATM branch1 = new ATM();
-        branch1.setAtmId(100002322320L);
+        branch1.setAtmId("100002322320L");
         branch1.setSiteType("Offsite");
         stateList.add(branch1);
 
         ATM branch2 = new ATM();
-        branch2.setAtmId(300002322320L);
+        branch2.setAtmId("300002322320L");
         stateList.add(branch2);
 
         model.addAttribute("atmList", stateList);

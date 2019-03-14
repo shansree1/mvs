@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class ATM implements Serializable {
 
     @Id
-    private Long atmId;
+    private String atmId;
     private String atmType;
     private String siteType;
     private String ownershipType;
@@ -45,11 +45,11 @@ public class ATM implements Serializable {
     @PrimaryKeyJoinColumn
     private ATMAuxInfo atmAuxInfo;
 
-    public Long getAtmId() {
+    public String getAtmId() {
         return atmId;
     }
 
-    public void setAtmId(Long atmId) {
+    public void setAtmId(String atmId) {
         this.atmId = atmId;
     }
 

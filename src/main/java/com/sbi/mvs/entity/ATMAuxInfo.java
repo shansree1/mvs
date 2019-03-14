@@ -9,7 +9,7 @@ import java.util.Date;
 public class ATMAuxInfo implements Serializable {
 
     @Id
-    private Long atmId;
+    private String atmId;
     private LocalDate targetDate;
     private Boolean tmkAvailable;
     private Boolean tmkChecksum;
@@ -29,11 +29,11 @@ public class ATMAuxInfo implements Serializable {
     @JoinColumn(name = "atmId")
     private ATM atm;
 
-    public Long getAtmId() {
+    public String getAtmId() {
         return atmId;
     }
 
-    public void setAtmId(Long atmId) {
+    public void setAtmId(String atmId) {
         this.atmId = atmId;
     }
 
