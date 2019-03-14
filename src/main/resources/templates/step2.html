@@ -19,10 +19,14 @@
             document.getElementById('form1').submit();
         }
 
-        function retrieveStates() {
+        function retrieveStates(selCBr) {
             var url = '/atmList';
 
-            $("#atmSelect").load(url);
+            var selRad = $("input[name=typeSel]:checked").val();
+            console.log(selRad);
+
+            var urlfinal = url + "/" + selRad + "/" + selCBr;
+            $("#atmSelect").load(urlfinal);
         }
 
         $(document).ready(function(){
@@ -32,6 +36,18 @@
                 console.log(atm);
                 var url = '/loadForAtm/' + atm;
                 $("#siteSel").load(url);
+            });
+
+            $("#cashbranch").change(function(){
+                var selCBr = $(this).val();
+                console.log(selCBr);
+                retrieveStates(selCBr);
+            });
+
+            $("#ownerbranch").change(function(){
+                var selCBr = $(this).val();
+                console.log(selCBr);
+                retrieveStates(selCBr);
             });
         });
     </script>
@@ -48,24 +64,24 @@
         <form action="/step3" id="form1" method="post">
         <div class="row sbirow">
             <div class="col-md-3 form-group">
-            <label>Select One:</label>
+                <label>Select One:</label>
             </div>
             <div class="col-md-1">
-            <input type="radio" name="typeSel" value="area" />
+                <input type="radio" name="typeSel" value="area" />
             </div>
             <div class="col-md-3">
-                <select name="area">
+                <select id="cashbranch" name="cashbranch">
                     <option>Select One</option>
-                    <option th:each="branchin : ${cashbranchList}" th:value="branchin" th:text="${branchin.branchId} + '-' + ${branchin.branchName}" ></option>
+                    <option th:each="branchin : ${cashbranchList}" th:value="${branchin.branchId}" th:text="${branchin.branchId} + '-' + ${branchin.branchName}" ></option>
                 </select>
             </div>
             <div class="col-md-1">
                 <input type="radio" name="typeSel" value="branch" />
             </div>
             <div class="col-md-3">
-                <select name="branch" onchange="retrieveStates()">
+                <select id="ownerbranch" name="ownerbranch">
                     <option>Select One</option>
-                    <option th:each="branchin : ${ownerbranchList}" th:value="branchin" th:text="${branchin.branchId} + '-' + ${branchin.branchName}" ></option>
+                    <option th:each="branchin : ${ownerbranchList}" th:value="${branchin.branchId}" th:text="${branchin.branchId} + '-' + ${branchin.branchName}" ></option>
                 </select>
             </div>
         </div>

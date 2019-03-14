@@ -39,6 +39,15 @@ public class GreetingController
         List<ATM> atmList = atmRepository.findAll();
         Set<Branch> cashLinkBranch = atmList.stream().map(ATM::getCashLinkBranch).collect(Collectors.toSet());
 
+        Branch branch1 = new Branch();
+        branch1.setBranchId(100L);
+        branch1.setBranchName("Branch 1");
+        cashLinkBranch.add(branch1);
+        Branch branch2 = new Branch();
+        branch2.setBranchId(200L);
+        branch2.setBranchName("Branch 2");
+        cashLinkBranch.add(branch2);
+
         model.addAttribute("cashbranchList", cashLinkBranch);
 
         Set<Branch> ownerBranch = atmList.stream().map(ATM::getOwnerBranch).collect(Collectors.toSet());
@@ -83,10 +92,11 @@ public class GreetingController
     }
 
 
-    @GetMapping("/atmList")
-    public String states(Model model)
+    @GetMapping("/atmList/{radioSel}/{brSel}")
+    public String states(Model model, @PathVariable("radioSel") String radioSel, @PathVariable("brSel") String brSel)
     {
-
+        System.out.println(radioSel);
+        System.out.println(brSel);
         List<ATM> stateList = new ArrayList<>();
         ATM branch1 = new ATM();
         branch1.setAtmId("100002322320L");
