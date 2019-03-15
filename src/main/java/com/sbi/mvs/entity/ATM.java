@@ -236,4 +236,36 @@ public class ATM implements Serializable {
     public void setAtmAuxInfo(ATMAuxInfo atmAuxInfo) {
         this.atmAuxInfo = atmAuxInfo;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("ATM{");
+        sb.append("atmId='").append(atmId).append('\'');
+        sb.append(", atmType='").append(atmType).append('\'');
+        sb.append(", siteType='").append(siteType).append('\'');
+        sb.append(", ownershipType='").append(ownershipType).append('\'');
+        sb.append(", networkType='").append(networkType).append('\'');
+        sb.append(", oem='").append(oem).append('\'');
+        sb.append(", model='").append(model).append('\'');
+        sb.append(", phase='").append(phase).append('\'');
+        sb.append(", msVendor='").append(msVendor).append('\'');
+        sb.append(", cashRepl='").append(cashRepl).append('\'');
+        sb.append(", ownerBranch=").append(ownerBranch);
+        sb.append(", cashLinkBranch=").append(cashLinkBranch);
+        sb.append(", address1='").append(address1).append('\'');
+        sb.append(", address2='").append(address2).append('\'');
+        sb.append(", address3='").append(address3).append('\'');
+        sb.append(", village='").append(village).append('\'');
+        sb.append(", taluk='").append(taluk).append('\'');
+        sb.append(", subDistrict='").append(subDistrict).append('\'');
+        sb.append(", district='").append(district).append('\'');
+        sb.append(", state='").append(state).append('\'');
+        sb.append(", popGroup='").append(popGroup).append('\'');
+        sb.append(", landmark='").append(landmark).append('\'');
+        sb.append(", atmNetwork=").append(atmNetwork);
+        sb.append(", atmAuxInfo=").append(atmAuxInfo);
+        sb.append('}');
+        return sb.toString();
+    }
 }
+

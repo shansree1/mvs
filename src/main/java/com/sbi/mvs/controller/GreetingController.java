@@ -1,9 +1,6 @@
 package com.sbi.mvs.controller;
 
-import com.sbi.mvs.entity.ATM;
-import com.sbi.mvs.entity.ATMAuxInfo;
-import com.sbi.mvs.entity.Branch;
-import com.sbi.mvs.entity.Region;
+import com.sbi.mvs.entity.*;
 import com.sbi.mvs.repository.AtmRepository;
 import com.sbi.mvs.repository.BranchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,11 +65,20 @@ public class GreetingController
 
 
     @PostMapping("/step3")
-    public String step3(Model model)
+    public String step3(@ModelAttribute ATM atmIn, Model model)
     {
-        model.addAttribute("currTab", "STEP3");
+        System.out.println(atmIn);
 
-        model.addAttribute("atmAux", new ATMAuxInfo());
+        ATM atmOut = atmRepository.getOne(atmIn.getAtmId());
+        Branch br = atmOut.getCashLinkBranch();
+        Pfhrms brmgr = br.getBranchPeopleData().getBranchManager();
+        Pfhrms atmofr = br.getBranchPeopleData().getAtmOfficer();
+
+        model.addAttribute("br", br);
+        model.addAttribute("atmIn", atmOut);
+        model.addAttribute("brmgr", brmgr);
+        model.addAttribute("atmofr", atmofr);
+        model.addAttribute("currTab", "STEP3");
         return "step3";
     }
 
@@ -113,7 +119,7 @@ public class GreetingController
     }
 
     @GetMapping("/loadForAtm/{atmId}")
-    public String states(Model model, @PathVariable("atmId") String atmId)
+    public String loadForAtm(Model model, @PathVariable("atmId") String atmId)
     {
         System.out.println(atmId);
         Optional<ATM> atm = atmRepository.findById(atmId);
@@ -125,7 +131,8 @@ public class GreetingController
         atm.setOem("Hyosung");
         atm.setModel("NCR22E");
         atm.setMsVendor("Hitachi");*/
-        model.addAttribute("atm", atm.get());
+        model.addAttribute("atmIn", atm.get());
+        System.out.println(atm.get());
 
         //model.addAttribute("atmType", atm.get().getAtmType());
         model.addAttribute("siteList", Arrays.asList("Onsite", "Offsite"));
@@ -135,6 +142,6 @@ public class GreetingController
         model.addAttribute("modelList", Arrays.asList("NCR22E", "NCR22"));
         model.addAttribute("msVendorList", Arrays.asList("FSS", "Hitachi", "NCR", "CMS"));
 
-        return "fragments :: atmFullFrag(atmIn=${atm})";
+        return "fragments :: atmFullFrag";
     }
 }
